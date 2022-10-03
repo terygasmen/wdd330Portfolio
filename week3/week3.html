@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Notes</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="theme-dark">
+    <nav>
+        <h1><a href="../index.html">Home</a></h1>
+    </nav>
+    <main>
+        <h3>object method: this</h3>
+        <p><em>objects</em> - usually created to represent entities of the real world, like users, orders and so on.</p>
+        <pre><code class="lang-ad-example">let <span class="hljs-keyword">user</span> <span class="hljs-title">= {
+            name</span>: <span class="hljs-string">"John"</span>,
+            age: <span class="hljs-number">30</span>
+        };
+        </code></pre>
+        
+        <p>in the real world, a user can act: select something from the shopping cart, login, logout, etc. actions are represent in javascript function in properties.</p>
+        <p><em>method</em> - a function that is a property of an object is called its method</p>
+        <p><em>object-oriented programming or OOP</em> - when we write our code using objects to represent entities. </p>
+        
+        <h4>method shorthand</h4>
+        <pre><code class="lang-ad-example"><span class="hljs-comment">// these objects do the same</span>
+
+        user = {
+            sayHi: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+                alert(<span class="hljs-string">"Hello"</span>);
+            }
+        };
+
+        <span class="hljs-comment">// method shorthand looks better, right?</span>
+        user = {
+            sayHi() {
+                alert(<span class="hljs-string">"Hello"</span>);
+            }
+        };
+        </code></pre>
+        
+        <h4>&quot;this&quot; in methods</h4>
+        <p><em>this</em> - to access the object, a method can use the this keyword. the value of this is the object &quot;before dot&quot;, the one used to call the method</p>
+        <pre><code class="lang-ad-example">let user = {
+        <span class="hljs-string">name:</span> <span class="hljs-string">"John"</span>,
+        <span class="hljs-string">age:</span> <span class="hljs-number">30</span>,
+
+        sayHi() {
+        <span class="hljs-comment">// "this" is the "current object"</span>
+        alert(<span class="hljs-keyword">this</span>.name);
+        }
+
+        };
+
+        user.sayHi(); <span class="hljs-comment">// John</span>
+        </code></pre>
+        
+        <p>here during the execution of user.sayHi(), the value of this will be user. technically, it&#39;s also possible to access the object without this, by referencing it via the outer variable</p>
+        
+        <pre><code class="lang-ad-example">let <span class="hljs-keyword">user</span> <span class="hljs-title">= {
+        name</span>: <span class="hljs-string">"John"</span>,
+        age: <span class="hljs-number">30</span>,
+
+        sayHi() {
+        alert(user.name); // <span class="hljs-string">"user"</span> instead of <span class="hljs-string">"this"</span>
+        }
+
+        };
+        </code></pre>
+        
+        <p>but such code is unreliable. if we decide to copy user to another variable, e.g. admin = user and overwrite user with something else, then it will access the wrong object</p>
+        
+        <pre><code class="lang-ad-example">let <span class="hljs-keyword">user</span> <span class="hljs-title">= {
+        name</span>: <span class="hljs-string">"John"</span>,
+        age: <span class="hljs-number">30</span>,
+
+        sayHi() {
+        alert(user.name); //leads to an error
+        }
+
+        };
+
+        let admin = user;
+        <span class="hljs-keyword">user</span> <span class="hljs-title">= null</span>; // overwrite to make things obvious
+
+        admin.sayHi(); //TypeError: Cannot <span class="hljs-keyword">read</span> <span class="hljs-keyword">property</span><span class="hljs-title"> </span>'name' of null
+        </code></pre>
+        
+        <p>if we used this.name instead of user.name inside the alert, then the code would work</p>
+        
+        <h4>&quot;this&quot; is not bound</h4>
+        <p>in javascript, it can be used in any function, even if it&#39;s not a method of an object.
+        the value of this is evaluated during the run-time, depending on the context.</p>
+        
+        <h5>calling without an object</h5>
+        <p>this == undefined
+        we can call the function without an object at all</p>
+        
+        <pre><code class="lang-ad-example"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayHi</span><span class="hljs-params">()</span> </span>{
+        alert(<span class="hljs-keyword">this</span>);
+        }
+
+        sayHi(); <span class="hljs-comment">//undefined</span>
+        </code></pre>
+        
+        <p>in this case, this is undefined in strict mode. if we try to access this.name, there will be an error. in non-strict mode the value of this in such case will be the global object (window in a browser). this is a historical behavior that &quot;use strict&quot; fixed.
+        usually such call is a programming error. if there&#39;s this inside a function, it expects to be called in an object context.</p>
+        
+        <h5>the consequences of unbound this</h5>
+        <p>in javascript this is &quot;free&quot;, its value is evaluated at call-time and does not depend on where the method was declared, but rather on what object is &quot;before the dot.&quot;</p>
+        
+        <h4>arrow functions have no &quot;this&quot;</h4>
+        <p>arrow functions are special: they don&#39;t have their &quot;own&quot; this. if we reference this from such a function, it&#39;s taken from the outer &quot;normal&quot; function.</p>
+        
+        <pre><code class="lang-ad-example"><span class="hljs-keyword">let</span> user = {
+        <span class="hljs-attr">firstName</span>: <span class="hljs-string">"Ilya"</span>,
+        sayHi() {
+        <span class="hljs-keyword">let</span> arrow = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> alert(<span class="hljs-keyword">this</span>.firstName);
+        arrow();
+        }
+        };
+
+        user.sayHi(); <span class="hljs-comment">//Ilya</span>
+        </code></pre>
+        
+        <h4>summary</h4>
+        <ul>
+            <li>functions that are stored in object properties are called methods</li>
+            <li>methods allow objects to act life object.doSomething()</li>
+            <li>methods can reference the object as this</li>
+        </ul>
+        
+        <p>the value of this is defined at run-time</p>
+        
+        <ul>
+            <li>when a functions is declred, it may use this, but that this has no value until the function is called</li>
+            <li>a function can be copied between objects</li>
+            <li>when a function is called in the &quot;method&quot; syntax: object.method(), the value of this during the call is object</li>
+        </ul>
+        
+        <h3>ch5 objects</h3>
+        
+        <h4>object literals</h4>
+        <p><em>object in JavaScript</em> - a self-contain set of related values and functions. they act as a collection of named properties that map to any javascript value such as strings, numbers, booleans, arrays and functions.</p>
+        <p>it&#39;s like a dictionary wehre you look up a proerty name and see a value. it&#39;s like a database of values (in fact, some databasess use javascript objects to store information)</p>
+        <p>they re often used to keep any related information and functionality together in the same place</p>
+        <p><em>method</em> - if a property&#39;s value is a function</p>
+        <p><em>object literal</em> - an object that is created directly in the language by wrapping all its properties and methods in curly braces {}</p>
+        <p>they allow objects to be created quickly without the need for defining a class. they also provide a useful way of organizing your code without polluting the glocal namespace</p>
+        
+        <pre><code class="lang-ad-example">const superman = {
+        <span class="hljs-string">name:</span> <span class="hljs-string">'Superman'</span>,
+        <span class="hljs-string">'real name'</span>: <span class="hljs-string">'Clark Kent'</span>,
+        <span class="hljs-string">height:</span> <span class="hljs-number">75</span>,
+        <span class="hljs-string">weight:</span> <span class="hljs-number">235</span>,
+        <span class="hljs-string">hero:</span> <span class="hljs-literal">true</span>,
+        <span class="hljs-string">villain:</span> <span class="hljs-literal">false</span>,
+        <span class="hljs-string">allies:</span> [<span class="hljs-string">'Batman'</span>, <span class="hljs-string">'Supergirl'</span>, <span class="hljs-string">'Superboy'</span>],
+        fly() {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'Up, up and away!'</span>;
+        }
+        };
+        </code></pre>
+        
+        <p>each property is a key-value pair, separated by commas. </p>
+        
+        <h5>differing naming conventions</h5>
+        <p>all objects are mutable at any time when a program is running. this means that its properties and methods can be changed or removed, and new properties and methods can be added to the object, even if it was declared using const.</p>
+        
+        <h4>creating objects</h4>
+        <p>to create an object literal, simple enter a pair of curly braces.</p>
+        
+        <pre><code class="lang-ad-example"><span class="hljs-attribute">const spriderman</span> = {};
+        </code></pre>
+        
+        <p>using a constructor function:</p>
+        
+        <pre><code class="lang-ad-example"><span class="hljs-keyword">const</span> spiderman = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();
+        </code></pre>
+        
+        <p>the object literal notation is the preferred way of creating objects because it requires less typing and provides a conside way of initializing an object and its properties in one statement.</p>
+        
+        <h4>accessing properties</h4>
+        <p>you can access the properties of an object using the dot notation.</p>
+        
+        <pre><code class="lang-ad-example">superman<span class="hljs-selector-class">.name</span>
+        &lt;&lt; <span class="hljs-string">'Superman'</span>
+        </code></pre>
+        
+        <p>using bracket notation--the property is represented by a string inside square brackets</p>
+        
+        <pre><code class="lang-ad-example">superman[<span class="hljs-string">'name'</span>]
+        &lt;&lt; <span class="hljs-string">'Superman'</span>
+        </code></pre>
+        
+        <p>this method is the only way to access nonstandard property and method names that don&#39;t follow the variable naming rules. it also lets you evaluate an expression and use it as the property key</p>
+        
+        <pre><code class="lang-ad-example"><span class="hljs-attribute">superman</span> [<span class="hljs-string">"real"</span> + <span class="hljs-string">" "</span> + <span class="hljs-string">"name"</span>]
+        &lt;&lt; <span class="hljs-string">"Clark Kent"</span>
+        </code></pre>
+        
+        <p>if you try to access a property that doesn&#39;t exist, undefined will be returned</p>
+        
+        <pre><code class="lang-ad-example">superman<span class="hljs-selector-class">.city</span>
+        &lt;&lt; undefined
+        </code></pre>
+        
+        <h4>computer properties</h4>
+        <p>JS code can be placed inside square brackets and the property key will be the return value of that code.</p>
+        
+        <pre><code class="lang-ad-example">const hulk = { <span class="hljs-string">name:</span> <span class="hljs-string">'Hulk'</span>, [<span class="hljs-string">'catch'</span> + <span class="hljs-string">'Phrase'</span>]: <span class="hljs-string">'Hulk Smash!'</span>}
+
+        <span class="hljs-comment">////</span>
+
+        {<span class="hljs-string">name:</span> <span class="hljs-string">'Hulk'</span>, <span class="hljs-string">catchPhrase:</span> <span class="hljs-string">'Hulk Smash!'</span>}
+        </code></pre>
+        
+        <h4>calling methods</h4>
+        <p>to call an object&#39;s method we can also use dot or bracket notation. calling a method is the same as invoking a function, so parentheses need to be placed after the method name</p>
+        
+        <h4>checking if properties or methods exist</h4>
+        <p>the <strong>in</strong> operator can be used to check whether an object has a particular property.</p>
+        
+        <pre><code class="lang-ad-example"><span class="hljs-string">'city'</span> <span class="hljs-keyword">in</span> superman;
+        &lt;&lt; <span class="hljs-literal">false</span>
+        </code></pre>
+        
+        <p>check to see if the property or method doesn&#39;t return undefined:</p>
+        
+        <pre><code class="lang-ad-info">superman.city !== <span class="hljs-literal">undefined</span>;
+        &lt;&lt; <span class="hljs-literal">false</span>
+        </code></pre>
+        
+        <p>using the hasOwnProperty() method. this can be used to check whether an object has a proerpty that is its own, rather than one that has been inherited from another object</p>
+        
+        <pre><code class="lang-ad-example">superman.hasOwnProperty(<span class="hljs-string">'city'</span>);
+        &lt;&lt; <span class="hljs-literal">false</span>
+
+        superman.hasOwnProperty(<span class="hljs-string">'name'</span>);
+        &lt;&lt; <span class="hljs-literal">true</span>
+        </code></pre>
+        
+        <h4>finding all the properties of an object</h4>
+        <p>we can loop through all of an object&#39;s properties and methods by using a <strong>for in</strong> loop</p>
+        
+        <pre><code class="lang-ad-example"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> superman) {
+        console.<span class="hljs-built_in">log</span>(key + <span class="hljs-string">": "</span> + superman[key])<span class="hljs-comment">;</span>
+        }
+
+        &lt;&lt; <span class="hljs-string">"name: Superman"</span>
+        &lt;&lt; <span class="hljs-string">"real name: Clark Kent"</span>
+        &lt;&lt; <span class="hljs-string">"height: 75"</span>
+        &lt;&lt; <span class="hljs-string">"weight: 235"</span>
+        &lt;&lt; <span class="hljs-string">"hero: true"</span>
+        &lt;&lt; <span class="hljs-string">"villain: false"</span>
+        &lt;&lt; <span class="hljs-string">"allies: Batman, Supergirl, Superboy"</span>
+        &lt;&lt; <span class="hljs-string">"fly: function () {
+        console.log(\"</span>Up, up <span class="hljs-literal">and</span> away!\<span class="hljs-string">");
+        }"</span>
+        </code></pre>
+        
+        <p>in this example, we create a variable called <strong>key</strong>. we then iterate over the properties of the <strong>superman</strong> object and use <strong>key</strong> to log the property name and superman[key] to look up the value of each property.</p>
+        <p>to make sure that only an object&#39;s own properties are returned, a quick check can be implemented beforehand:</p>
+        
+        <pre><code class="lang-ad-info"><span class="hljs-keyword">for</span>(const <span class="hljs-built_in">key</span> <span class="hljs-keyword">in</span> superman) {
+        <span class="hljs-keyword">if</span>(superman.hasOwnProperty(<span class="hljs-built_in">key</span>)) {
+        console.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">key</span> + <span class="hljs-string">": "</span> + superman[<span class="hljs-built_in">key</span>]);
+        }
+        }
+        </code></pre>
+        <p><em>Object.keys()</em> method will return an array of all the keys of any object that is provided as an argument. we can then iterate over this array to access all the keys of an object:</p>
+        <pre><code class="lang-ad-example"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">const</span> <span class="hljs-built_in">key</span> of <span class="hljs-keyword">Object</span>.keys(superman)) {
+        console.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">key</span>);
+        }
+
+        &lt;&lt; name
+        real name
+        <span class="hljs-built_in">height</span>
+        weight
+        hero
+        villain
+        allies
+        fly
+        </code></pre>
+        
+        <h4>adding properties</h4>
+        <pre><code class="lang-ad-example">superman.city = <span class="hljs-string">'Metropolis'</span>;
+        &lt;&lt; <span class="hljs-string">'Metropolis'</span>
+        </code></pre>
+        
+        <h4>changing properties</h4>
+        <pre><code class="lang-ad-example">superman[<span class="hljs-string">'real name'</span>] = <span class="hljs-string">'Kal-El'</span>;
+        &lt;&lt; <span class="hljs-string">'Kal-El'</span>
+        </code></pre>
+        
+        <h4>removing properties</h4>
+        <pre><code class="lang-ad-example"><span class="hljs-keyword">delete</span> superman.fly
+        &lt;&lt; <span class="hljs-literal">true</span>
+        </code></pre>
+        
+        <h4>nested objects</h4>
+        <p>it&#39;s even possible for an object to contain other objects. these are known as nested objects.</p>
+        <pre><code class="lang-ad-example">const jla = {
+        <span class="hljs-string">superman:</span> {<span class="hljs-string">realName:</span> <span class="hljs-string">'Clark Kent'</span>},
+        <span class="hljs-string">batman:</span> {<span class="hljs-string">realName:</span> <span class="hljs-string">'Bruce Wayne'</span>},
+        <span class="hljs-string">wonderWoman:</span> {<span class="hljs-string">realName:</span> <span class="hljs-string">'Diana Prince'</span>},
+        <span class="hljs-string">flash:</span> {<span class="hljs-string">realName:</span> <span class="hljs-string">'Barry Allen'</span>},
+        <span class="hljs-string">aquaman:</span> {<span class="hljs-string">realName:</span> <span class="hljs-string">'Arthur Curry'</span>},
+        }
+        </code></pre>
+        <p>the values in nested objects can be accessed by referencing each property name in order using either dot or bracket notation</p>
+        <pre><code class="lang-ad-example">jla<span class="hljs-selector-class">.wonderWoman</span><span class="hljs-selector-class">.realName</span>
+        &lt;&lt; <span class="hljs-string">"Diana Prince"</span>
+
+        jla[<span class="hljs-string">'flash'</span>] [<span class="hljs-string">'realName'</span>]
+        &lt;&lt; <span class="hljs-string">"Barry Allen"</span>
+
+        jla<span class="hljs-selector-class">.aquaman</span>[<span class="hljs-string">'realName'</span>]
+        &lt;&lt; <span class="hljs-string">"Arthur Curry"</span>
+        </code></pre>
+        <h5 id="objects-are-copied-by-reference">objects are copied by reference</h5>
+        <p>objects are assigned by <em>reference</em>. this means that if a variable is assigned to an object are assigned to an object that already exists, it will simple point to the exact same space in memory. so any changes made using either reference will affect the same object.</p>
+        <h4 id="objects-as-parameters-to-functions">objects as parameters to functions</h4>
+        <p>an object literal can be passed as a parameter to a function. this is useful where there are a large number of parameters, as it allows the arguments to be provided by name and in any order. this means you don&#39;t have to remember the order to enter them when invoking a function</p>
+        <pre><code class="lang-ad-example"><span class="hljs-keyword">function</span> <span class="hljs-title">greet</span>({greeting, name, age}) {
+        <span class="hljs-keyword">return</span> <span class="hljs-type">`${greeting}!</span> My name <span class="hljs-keyword">is</span> ${name} <span class="hljs-keyword">and</span> I am ${age} years old.` 
+        }
+
+        /// <span class="hljs-keyword">function</span> <span class="hljs-title">in</span> application
+
+        greet({ greeting: `What's up dude`, age: 10, name: `Bart`});
+        &lt;&lt; <span class="hljs-symbol">'What</span>\<span class="hljs-symbol">'s</span> up dude! My name <span class="hljs-keyword">is</span> Bart <span class="hljs-keyword">and</span> I am <span class="hljs-number">10</span> years old.'
+        </code></pre>
+        <p>this technique is referred to as using <strong>named parameters</strong> and is often used when a fucntion has a large amount of optional parameters.</p>
+        
+        <h5>this</h5>
+        <p>refers to the object that is within. it can be used inside methods to gain access to the object&#39;s properties.</p>
+        <pre><code class="lang-ad-example"><span class="hljs-keyword">const</span> dice = {
+        <span class="hljs-attr">sides</span>: <span class="hljs-number">6</span>,
+        roll() {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.floor(<span class="hljs-keyword">this</span>.sides * <span class="hljs-built_in">Math</span>.random()) + <span class="hljs-number">1</span>;
+        }
+        }
+        </code></pre>
+        
+        <h4>namespacing</h4>
+        <p><em>naming collisions</em> - occur when the same variable of function name is used for different purposes by code sharing the same scope.</p>
+        <p><em>object literal pattern</em> - solution to this problem to create a namespace for groups of related functions. this is done by creating an object literal that serves as the namespace, then adding any values as properties of that object, and any functions as methods.</p>
+        
+        <h4>built-in objects</h4>
+        <h5>JSON or JavaScript Object Notation</h5>
+        <ul>
+            <li>invented by Douglas Crockford in 2001</li>
+            <li><p>a string representation of the object literal notation.</p>
+            </li>
+            <li><p>property names must be double-quoted</p>
+            </li>
+            <li>permitted values are double-quoted strings, numbers, true, false, null, arrays and objects</li>
+            <li>functions are not permitted values</li>
+        </ul>
+        <p><em>parse()</em> - method that takes a string of data in JSON format and returns a JS object
+        <em>stringify()</em> - method that takes a JS object and returns a string of JSON data</p>
+        
+        <h5>the Math object</h5>
+        <p>a built-in object that has several properties representing mathematical constants, as well as methods that carry out a number of common mathematical operations</p>
+        <p><em>Math.abs()</em> - returns the absolute value of a number</p>
+        <p><em>Math.ceil()</em> - round a number up to the next integer, or remain the same if it is already an integer</p>
+        <p><em>Math.floor()</em> - round a number down to the next integer, or remain the same if it already an integer</p>
+        <p><em>Math.round()</em> - round a number to the nearest integer</p>
+        <p><em>Math.trunc()</em> - returns the integer-part of a number. it gets truncated at the decimal point</p>
+        <p><em>Math.exp()</em> - raise a number to the power of Euler&#39;s constant</p>
+        <p><em>Math.pow()</em> - raise any number (the first argument) to the power of another number (the second argument)</p>
+        <p><em>Math.sqrt()</em> - returns the positive square root of a number</p>
+        <p><em>Math.cbrt()</em> - returns the cube root of numbers</p>
+        <p><em>Math.hypot()</em> - returns the square root of the sum of the squares of all its arguments. it can be used to calculate the hypotenuse of a right-angled triangle</p>
+        <p><em>Math.log()</em> - returns the natural logarithm of a number</p>
+        <p><em>Math.max()</em> - returns the maximum number from its arguments</p>
+        <p><em>Math.min()</em> - returns the minimum number from the given arguments</p>
+        <p><em>Math.random()</em> - used to create random numbers, which can be very useful when writing programs</p>
+        
+        <p><strong>objects</strong></p>
+        
+        <ul>
+            <li>Date</li>
+            <li>RegExp</li>
+        </ul>
+        
+        <h4>character groups</h4>
+        <p>groups of characters can be placed together insie square brackets.</p>
+        <p>a sequence of characters can also be represented by placing a dash [ - ] between the first and last characters</p>
+        
+        <h5>regular expression properties</h5>
+        <ul>
+            <li>the global property makes the pattern return all matches. by default, the pattern only looks for the first occurrence of a math</li>
+            <li>the ignoreCase property makes the pattern case-insensitive. by default, they are case sensitive</li>
+            <li>the mutiline property makes the pattern multiline. by default, a pattern will stop at the end of a line</li>
+        </ul>
+        <p><strong>the following flags can be placed after a regular expression literal to change the default properties</strong></p>
+        
+        <ul>
+            <li>g sets the global property to true</li>
+            <li>i sets the ignoreCase property to true</li>
+            <li>m sets the multiliine property to true</li>
+        </ul>
+        
+        <h5>greedy and lazy modifiers</h5>
+        <p><em>lazy modifiers</em> - match the shortest possible string by adding an extra &#39;?&#39; after the modifier</p>
+        
+        <h4>summary</h4>
+        <ul>
+            <li>objects are a collection of key-value pairs placed inside curly braces {}</li>
+            <li>objects have properties that can be any JS value. ifi t&#39;s a function, it&#39;s known a method</li>
+            <li>an object&#39;s properties and methods can be accessed using either dot notation or square bracket notation</li>
+            <li>objects are mutable which means their properties and methods can be changed or removed</li>
+            <li>objects can be used as parameters to functions, which allows arguments to be entered in any order, or omitted</li>
+            <li>nested ojects can be created by placing objects inside objects</li>
+            <li>JSON is a portable data format that uses JS object literals to exchange information</li>
+            <li>the Math object gives access to a number of mathematical constants</li>
+            <li>the Math object can be used to perform mathematical calculations</li>
+            <li>the Date object can be used to create date objects</li>
+            <li>once you&#39;ve created a Date object, you can use the getter methods to access information about that date</li>
+            <li>once you&#39;ve created a Date object, setter methods can be use to change information about that date</li>
+            <li>the Regex object can be used to create regular expressions</li>
+        </ul>
+        
+        <h3>ch6 the document object model</h3>
+        <p><em>DOM or document object model</em> - represents an HTML document as a network of connected nodes that form a tree-like structure.</p>
+        <ul>
+            <li>it treats everything on a web page as a node. HTML tags, the text inside these tags, even the attributes of a tag are all nodes.</li>
+            <li>the HTML tag is the root node, and every other part of the document is a child node of this</li>
+            <li>it is language agnostic. this means it can be used in any programming language, not just JS</li>
+            <li>we use JS to access and modify different parts of a web page using a special built-in object called <em>document</em></li>
+        </ul>
+        
+        <h4>getting elements</h4>
+        <pre><code class="lang-ad-example">//access the body element of a web page<span class="hljs-built_in"> and </span>assign it to the variable body<span class="hljs-built_in">
+        const </span>body = document.body;
+
+        // now we can<span class="hljs-built_in"> check </span>its type
+        typeof body;
+        &lt;&lt; <span class="hljs-string">"object"</span>;
+
+        // we can<span class="hljs-built_in"> check </span>what type of node it is
+        body.nodeType;
+        &lt;&lt; 1
+
+        //<span class="hljs-built_in"> check </span>the name of the element
+        body.nodeName;
+        &lt;&lt; <span class="hljs-string">"BODY"</span>
+        </code></pre>
+        <p><strong>numerical code of nodes</strong></p>
+        <table>
+            <thead>
+            <tr>
+            <th>code</th>
+            <th>type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>1</td>
+            <td>element</td>
+            </tr>
+            <tr>
+            <td>2</td>
+            <td>attribute</td>
+            </tr>
+            <tr>
+            <td>3</td>
+            <td>text</td>
+            </tr>
+            <tr>
+            <td>8</td>
+            <td>comment</td>
+            </tr>
+            <tr>
+            <td>9</td>
+            <td>body</td>
+            </tr>
+            </tbody>
+            </table>
+        
+        <h4>legacy DOM shortcut methods</h4>
+        <table>
+        <thead>
+        <tr>
+        <th>method</th>
+        <th>desc</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Document.body</td>
+        <td>returns the body element of a web page</td>
+        </tr>
+        <tr>
+        <td>Document.images</td>
+        <td>returns a node list of all the images contained in the document</td>
+        </tr>
+        <tr>
+        <td>Document.links</td>
+        <td>returns a node list of all the a elements and area elements that have an href attribute</td>
+        </tr>
+        <tr>
+        <td>Document.anchors</td>
+        <td>returns a node list of all the a elements that have a name attribute</td>
+        </tr>
+        <tr>
+        <td>Document.forms</td>
+        <td>reutrns a node list of al the forms in the document</td>
+        </tr>
+        </tbody>
+        </table>
+        
+        <h4>getting elements</h4>
+        <table>
+        <thead>
+        <tr>
+        <th>method</th>
+        <th>desc</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>getElementById()</td>
+        <td>returns a reference to the element with a unique id attribute that is given as an argument</td>
+        </tr>
+        <tr>
+        <td>getElementsByTagName()</td>
+        <td>returns a live node list of all the elements with the tag name that is provided as an argument</td>
+        </tr>
+        <tr>
+        <td>getElementsByClassName()</td>
+        <td>erturns a live node list of all elements that have the class name that is supplied as an argument</td>
+        </tr>
+        </tbody>
+        </table>
+        
+        <h4>query selectors</h4>
+        <p><em>document.querySelector()</em> - allows you to use CSS notation to find the first element in the document that matches a CSS selector provided as an argumen. if no elements match, it will return null
+        <em>dcument.querySelectorAll()</em> - uses CSS notation but returns anode list of all the elements in the document that match the CSS query selector</p>
+        <p><strong>jQuery</strong></p>
+        <ul>
+            <li>finds elements on a page using a CSS-style syntax,</li>
+            <li>uses the document.querySelectorAll() in the background whenever it can</li>
+        </ul>
+        <pre><code class="lang-ad-example">$(<span class="hljs-string">'ul#roster'</span>).find(<span class="hljs-string">'li#bats'</span>);
+
+        <span class="hljs-comment">// the same as</span>
+        <span class="hljs-keyword">const</span> ul = <span class="hljs-built_in">document</span>.<span class="hljs-built_in">querySelector</span>(<span class="hljs-string">'ul#roster'</span>);
+        ul.<span class="hljs-built_in">querySelector</span>(<span class="hljs-string">'li#bats'</span>)
+        </code></pre>
+        
+        <h4>navigating the DOM tree</h4>
+        <p><em>childNodes</em> - property that is a list of all the nodes that are children of the node concerned</p>
+        <p><em>children</em> - property that only returns any elements nodes that are children of that node, so will ignore any text nodes</p>
+        <p><em>firstChild</em> - property that returns the first child of a node</p>
+        <p><em>lastChild</em> - property that returns the last child of a node</p>
+        <p><em>parentNode</em> - property that returns the parent node of an element</p>
+        <p><em>nextSibling</em> - property that returns the next adjacent node of the same parent.</p>
+        <p><em>previousSibling</em> - property that returns the previous adjacent node</p>
+        
+        <h4>finding the value of a node</h4>
+        <pre><code class="lang-ad-example">//<span class="hljs-function"><span class="hljs-keyword">method</span> <span class="hljs-title">one</span></span>
+
+        <span class="hljs-keyword">const</span> textNode = wonderWoman.firstChirld;
+        textNode.nodeValue;
+        &lt;&lt; <span class="hljs-string">"Wonder Woman"</span>
+
+        // <span class="hljs-function"><span class="hljs-keyword">method</span> <span class="hljs-title">two</span></span>
+        wonderWoman.textContent
+        &lt;&lt; <span class="hljs-string">"Wonder WOman"</span>
+        </code></pre>
+        
+        <h4>getting and setting attributes</h4>
+        <h5>getting an elemeent&#39;s attributes</h5>
+        <p><em>getAttribute()</em> - returns the value of the attribute provided as an argument</p>
+        <pre><code class="lang-ad-example">wonderWoman.getAttribute(<span class="hljs-string">'class'</span>);
+        &lt;&lt; <span class="hljs-string">"hero"</span>
+        </code></pre>
+        
+        <h5>setting an element&#39;s attributes</h5>
+        <p><em>setAttribute</em> - change the value of an element&#39;s attributes</p>
+        <pre><code class="lang-ad-example">wonderWoman.setAttribute(<span class="hljs-string">'class'</span>, <span class="hljs-string">'villain'</span>);
+        &lt;&lt; <span class="hljs-literal">undefined</span>
+
+        wonderWOman.getAttribute(<span class="hljs-string">'class'</span>);
+        &lt;&lt; <span class="hljs-string">"villain"</span>
+        </code></pre>
+        
+        <h4>summary</h4>
+        <ul>
+            <li>the DOM is a way of representing a page of HTML as a tree of nodes</li>
+            <li>the document.getELementById(), document.getElementByClassName(), document.getElementByTagNames() and document.querySelector() can be used to access elements on a page</li>
+            <li>the parentNode(), previousSibling(), nextSibling(), childNodes(), and children() methods can be used to navigate around the DOM tree</li>
+            <li>an element&#39;s attrbitues can be accessed using the getAttribute() method, and updated using the setAttribute() method</li>
+            <li>the createElement() and createTextNode() methods can be used to create dynamic markup on the fly</li>
+            <li>markup can be added to the page using the appendChild() and insertBefore() methods</li>
+            <li>elmeents can be replaced using the replaceChild() method and removed using the removeChild() method</li>
+            <li>the innerHTML property can be used to insert raw HTML directly into the DOm</li>
+            <li>the CSS properties of an element can be changed by accessing the style property</li>
+        </ul>
+        
+        <h3>ch7 events</h3>
+        <p><em>click</em> event - occurs when a user clicks with a mouse, presses the Enter key or taps the screen, making it a very useful all-round event covering many types of interaction</p>
+        
+        <h4>older event handlers</h4>
+        <pre><code class="lang-ad-example"><span class="hljs-built_in">document</span>.onclick = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'You click on the page.'</span>)
+        }
+        </code></pre>
+        <h4 id="using-event-listeners">using event listeners</h4>
+        <pre><code class="lang-ad-example"><span class="hljs-selector-tag">document</span><span class="hljs-selector-class">.body</span><span class="hljs-selector-class">.addEventListener</span>(<span class="hljs-string">'click'</span>, doSomething);
+
+        <span class="hljs-comment">// without a node reference preceding it</span>
+        <span class="hljs-selector-tag">addEventListener</span>(<span class="hljs-string">'click'</span>, () =&gt; alert(<span class="hljs-string">'You clicked!'</span>));
+
+        <span class="hljs-comment">// or declare a function first and reference it in the event listener</span>
+        <span class="hljs-selector-tag">function</span> <span class="hljs-selector-tag">doSomething</span>() {
+        <span class="hljs-selector-tag">alert</span>(<span class="hljs-string">'You Clicked!'</span>);
+        }
+
+        <span class="hljs-selector-tag">addEventListener</span>(<span class="hljs-string">'click'</span>, doSomething);
+        </code></pre>
+        
+        <h4>types of event</h4>
+        <p><em>type</em> property - returns the type of event that occurred</p>
+        
+        <h5>mouse events</h5>
+        <ul>
+            <li>click</li>
+            <li>doubleclick</li>
+        </ul>
+        
+        
+        <h5>keyboard events</h5>
+        <ul>
+            <li>keydown - a key is pressed and will continue to occur if the key is held down</li>
+            <li>keypress - after a keydown event but before a keyup event. it only occurs for keys that produce character input lus the delete key. it&#39;s the most reliable way to find out the character that was pressed on the keyboard</li>
+            <li>keyup - when a key is released</li>
+        </ul> 
+
+        <h5>touch events</h5>
+        <ul>
+            <li>touchstart - when a user initially touches the surface</li>
+            <li>touchend - when a user stops touching the surface</li>
+            <li>touchmove - after a user has touched the screen then moves around without leaving</li>
+            <li>touchenter - when a user has already started touching the surface, but then passes over the element to which the event listener  is attached</li>
+            <li>touchleave - when the user is still touching the surface but leaves the element to which the event listener is attached</li>
+            <li>touchcancel - when a touch event is interrupted, such as a user&#39;s finger moving outside the document window, or too many finger being used at once</li>
+        </ul>
+        
+        <h4>the event target</h4>
+        <p><em>target</em> property - returns a reference to the node that fired the event</p>
+        
+        <h4>removing event listeners</h4>
+        <p><em>removeEventListener()</em></p>
+        
+        <h4>stopping default behavior</h4>
+        <p><em>preventDefault</em>() - method of the event object that can be used inside the callback function to top the default behavior happening</p>
+        
+        <h4>summary</h4>
+        <ul>
+            <li>events occur when a user interacts with a web page</li>
+            <li>an event listener is attached to an element, then invokes a callback function when the event occurs</li>
+            <li>the event object is passed to the callback function as an argument, and contains lots of properties and methods relating to the event</li>
+            <li>there are many types of event, including mouse events, keyboard events, and touch events</li>
+            <li>you can remove an event using hte removeEventListener method</li>
+            <li>the default behavior of elements can be prevented using the preventDefault() function</li>
+            <li>event propagation is the order the events fire on each element</li>
+            <li>event delegation is when an event listener is added to a parent element to capture events that happen to its children elements</li>
+        </ul>
+
+    </main>
+</body>
+</html>
