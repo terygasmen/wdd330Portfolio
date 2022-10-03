@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week Two Notes</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="theme-dark">
+    <nav>
+        <h1><a href="../index.html">Home</a></h1>
+    </nav>
+    <main>
+        <h3 id="ch2-programming-basics">ch2 programming basics</h3>
+        
+        <h5>comments</h5>
+        <p>well-commented code is the hallmark of a ninja programmer. it makes it easier for anybody reading your code to understand what&#39;s going on...</p>
+        <p>There are even utilities that can take your comments and produce documentation from them such as JSDoc Toolkit, Docco, and YUIDoc.</p>
+        
+        <h5>javascript grammar</h5>
+        <p>the syntax used by javascript is known as a C-style syntax because of its similiarities with the C programming language</p>
+        <p><em>automatic semicolon insertion (ASI)</em> - this will attempt to place semicolons at the end of lines for you. however, it can be error-prone and cause a number of automated services such as code minifiers and validators to not work properly</p>
+        
+        <h5>primitive data types</h5>
+        <ul>
+            <li>string</li>
+            <li>symbol</li>
+            <li>number</li>
+            <li>boolean</li>
+            <li>undefined</li>
+            <li>null</li>
+        </ul>
+
+        <p>any value that isn&#39;t one of the primitive data types listed above is an <em>object</em>.</p>
+        <p><em>typeof</em> - a javascript special operator for finding out the type of a value</p>
+        <p><em>operand</em> - an operator applies an operation to a value which is known as the operand</p>
+        <p><em>ternary operator</em> - requires three operands.</p>
+        
+        <h5>declaring and assigning</h5>
+        <p><em>reassign</em> - means you can&#39;t reassign the variable to another value. that means that if a variable is assigned to a primitive data type, then the value can&#39;t be changed and will result in an error if you attempt to.</p>
+        <p>if the variable references a non-primitive data type, such as an array, function or object, the using const will not make it <em>immutable.</em> this means the underlying data inside the object can change (known as <em>mutating</em> the object)</p>
+        <p>the main difference with using var and let was that variables declared using let and const have block scope. they also prevent you from overwriting any built-in methods by assignment, which is generally frowned upon whereas using var doesn&#39;t.</p>
+        
+        <h5>scope</h5>
+        <p>using <em>const</em> and <em>let</em> to declare variables means they are <em>block scoped</em>, so their value only exists inside the block they are declared in.</p>
+        <p><em>scope</em> - refers to where a constant or variable is accessbile by the program. 
+        <strong>global scope</strong>
+        any variable declared outide of a block. this means it is accesible everywhere in the program. this isn&#39;t considered a good practice.
+        <strong>local scope</strong>
+        any variables defined inside a block using the <em>let</em> or <em>const</em> will only be available inside that block and not be accessible outside of that block. </p>
+        
+        <h5>string properties and methods</h5>
+        <p><em>properties</em> - information about the object or value
+        <em>methods</em> - perform an action on the object or value--either to change it or to tell us something about it</p>
+        <p><strong>wrapper objects</strong>
+        primitve data types also have properties and methods, not just objects.</p>
+        <p>all properties of primitive data types are immutable, meaning they&#39;re unable to be changed.</p>
+        <p><em>method</em> - is an action that a primitive data type or object can perform.</p>
+        
+        <h5>template literals</h5>
+        <ul>
+            <li>they use the backtick character to deliminate the string. this has the advantage of being able to use both tpes of quote marks within the string.</li>
+            <li>they also allow interpolation of javascript code. this means that a javascript expression can be inserted inside a string. the javascript expression is placed inside the curly braces with a $ character infront of them. this is then evaluated and the result is returned in the string output.</li>
+            <li>they can also contain line breaks which are all converted into a line feed (\n). </li>
+            <li>if you want to place a backtick inside a template literal, then it needs to be escaped in the usual way, using a backslask.</li>
+        </ul>
+        
+        <h5>type coercion</h5>
+        <p>this happens when the operands of an operator are of different types. in this case, javascript will attempt to convert one operand to an equivalent value of the other operand&#39;s type.</p>
+        
+        <h5>converting strings to numbers</h5>
+        <ul>
+            <li>Number() - the best way to change a string to a number. it avoids type coercion in the background.</li>
+            <li>multiple a numerical string by 1</li>
+            <li>place + operator in front of the numerical string</li>
+        </ul>
+        
+        <h5>converting numbers to strings</h5>
+        <ul>
+            <li>String()</li>
+            <li>add an empty string (not recommended)</li>
+            <li>toString()</li>
+        </ul>
+        
+        <p><em>undefined</em> - the value given to varialbes that have not been assigned a value</p>
+        <p><em>null</em> - means no value. it behaves like a zero</p>
+        <p><em>boolean</em> - have only two values: true and false. named after george boole. every value in javascript has a boolean value and most of them are true (or <em>truthy</em> values). false known as <em>falsy</em>.</p>
+        
+        <h5>logical operators</h5>
+        <p><strong>! (Logical NOT)</strong></p>
+        <p>placing the ! operator in front of a value will convert it to a boolean and return the opposite value. this is known as <em>negation</em>.</p>
+        <p>you can use double negation !! to find out if a value is truthy or falsy</p>
+        <p><strong>&amp;&amp; (Logical AND)</strong></p>
+        <p>works on two or more values (the operands) and only evaluates to true if all the operants are truthy.</p>
+        <p>the value that is returned is the last truth value if they are all true or the first falsy value if at least one of them is false</p>
+        <p><strong>|| (Logical OR)</strong></p>
+        <p>works on two or more operands, but evaluates to true if any of the operands are true, so it only evaluates to false if both operands are falsy.</p>
+        <p>the value that is returned is the first truthy value if any of them are true, or the last falsy value if all of them are false</p>
+        <p><strong>lazy evaluation</strong></p>
+        <p>you only check the minimum number of criteria that needs to be met. javascript performs a similar task when processing the logical AND and OR operators. this means it stops evaluting any further operands once the result is clear</p>
+        
+        <h5>bitwise operators</h5>
+        <p>they work with operands that are 32-bit integers. these are numbers written in binary (base two) that have 32 digits made up of just 0s and 1s.</p>
+        <p>javascript will convert any values used with bitwise operators into a 32-bit integer then carry out the operation. it them changes it back into a base 10 integer to display the return value</p>
+        <p>these operators tend to only be used for low-level programming tasks or applications that require a number of on-off states.</p>
+        <p><strong>Bitwise NOT</strong></p>
+        <p>will convert the number to a 32-bit integer, then change all the 1s to 0 and the 0s to 1s. it then returns the new value as an inteer.</p>
+        <p><strong>Bitwise AND</strong></p>
+        <p>will convert both numbers into binary, and returns a number that in binary has a 1 in each position for which the corresponding bits of both operands are 1s.</p>
+        <p><strong>Bitwise OR</strong></p>
+        <p>convert both number into binary and return a number that in binary has 1 in each position for which the corresponding bits of either operands are 1s.</p>
+        <p><strong>Bitwise XOR</strong></p>
+        <p>stands for &quot;eXclusive OR&quot;. this will convert both numbers into binary and return a number that in binary has a 1 in each position for which the corresponding bits of either are 1s, but not both 1s.</p>
+        <p><em>don&#39;t use ^ to notate exponents</em></p>
+        <p>^ is often used as an informal notation for exponents.</p>
+        <p><strong>Bitwise Shift Operators</strong></p>
+        <p>will move the binary representation a given number of places to the right or left, which effectively multiplies or divides the number by powers of two</p>
+        
+        <h5>comparison</h5>
+        <p><strong>equality</strong> (=)</p>
+        <p>assign the values to a variable</p>
+        <p><strong>soft equality</strong> ==</p>
+        <p>checks if the answer is in fact equal to the number using the soft, or lenient, equality operator</p>
+        <p><strong>hard equality</strong> ===</p>
+        <p>also correctly reports that null and undefined are two different values</p>
+        <p><strong>inequality</strong> != or !==</p>
+        
+        <h5>chapter summary</h5>
+        <ul>
+            <li>comments are ignored by the program, but make your program easier to read and understand</li>
+            <li>data types are the basic building blocks of all javascript programs.</li>
+            <li>there are six primitive data types: strings, symbols, numbers, Booleans, undefined and null</li>
+            <li>non-primitive data types, such as arrays, functions and objects, all have a type of &#39;object&#39;</li>
+            <li>variables point to values stored in memory and are declared using the const or let keywords</li>
+            <li>values are assigned to variables using the = operator</li>
+            <li>strings and numbers have various propertie and methods that provide information about them</li>
+            <li>symbols are unique, immutable values</li>
+            <li>boolean values are either true or false</li>
+            <li>there are only seven values that are false in javascript and these are known as falsy values</li>
+            <li>data types can be converted into other data types</li>
+            <li>type coercion is when javascript tries to convert a value into another data type in order to perform an operation</li>
+            <li>logical operators can be used to check if compound sttatements are true or false</li>
+            <li>values can be compared to see if they are equal, greater than or less than other values</li>
+        </ul>
+        
+        <h3>ch 3 arrays, logic and loops</h3>
+        
+        <h5>arrays</h5>
+        <p>ordered list of values </p>
+        <ul>
+            <li>.length</li>
+            <li>.pop() - remove the last item from an array</li>
+            <li>.shift() - remove the first item from an array</li>
+            <li>.push() - appends a new value to the end of the array</li>
+            <li>.unshift() - appends a new item to the beginning of the array</li>
+            <li>.concat() - mergean array with one or more arrays</li>
+            <li>.join() - turn an array into a string that comprises all the items in the arrays, separated by commas</li>
+            <li>.slice() - creates a subarray</li>
+            <li>.splice() - removes items from an array then inserts new items in their place</li>
+            <li>.reverse() - reverse the order of an array</li>
+            <li>.sort() - sorts the order of an array alphabetically by default for string and number objects. also changes the order of the array permanently</li>
+            <li>.indexOf() - find the first occurrence of a value in an array</li>
+        </ul>
+        
+        <p><strong>multidimensional arrays</strong></p>
+        <p>create an array of arrays</p>
+        
+        <ul>
+            <li>to access the values ina multidimensional array, we use two indices: one to refer to the item&#39;s place in the outer array, and one to refer to its place in the inner array.</li>
+            <li>flattening multidimensional arrays involves remiving al nested arrays so all the values are on the same level in the array</li>
+        </ul>
+
+        <h5>sets</h5>
+        <p>set is a data structure that represents a collection of unique values, so it cannot include any duplicate values</p>
+        <ul>
+            <li>.has() - checks if a value is in a set. returns a boolean value</li>
+            <li>.delete() - remvoes a value from a set.  returns true if the value is removed, or false if the value isn&#39;t in the set and can&#39;t be removed</li>
+            <li>.clear() - used to remove all values from a set</li>
+        </ul>
+        
+        <h5>converting sets to arrays</h5>
+        <p>a set can be converted into an array by placing the set, along with the <em>spread operator</em> directly inside an array literal directly inside an array literal</p>
+        
+        <pre><code>// create the set
+        <span class="hljs-built_in">const </span>shoppingSet =<span class="hljs-built_in"> new </span>Set().add('apples').add('bananas').add('beans');
+        
+        // converting into<span class="hljs-built_in"> array
+        </span><span class="hljs-built_in">const </span>shoppingArray = [...shoppingSet]
+        </code></pre>
+        
+        <p>by combining this use of the spread operator with the ability to pass an array to the new Set() constructor, we now have a conveninent way to create a copy of an array with any duplicate values removed.</p>
+        
+        <h5>weak sets</h5>
+        <p><em>garbage-collected</em> - when objects are added to sets, they will be stored there for as long as the set exists, even if the original reference to the object is removed. this can cause a memory leak</p>
+        <p><strong>memory leaks</strong></p>
+        
+        <ul>
+            <li>occurs when a program retains reference to values that can no longer be accessed in its memory. this means that memory is being used to store values that are no longer required by the program, effectively wasting system resources.</li>
+            <li>gradually reduces the overall memory available, which can cause the program or even the entire system to run slowly</li>
+        </ul>
+        
+        <p><em>garbage collection</em> - the process of automatically removing items from memory that are no longer required by the program.</p>
+        <p><em>weak sets</em> - garbage collects any references to a &#39;dead object&#39; that&#39;s had it&#39;s original reference removed</p>
+        
+        <ul>
+            <li>WeakSet()</li>
+            <li>only non-primitive data types can be added to weak sets</li>
+            <li>has(), add() and delete() methods work in the same way in weak sets</li>
+        </ul>
+        
+        <h5>maps</h5>
+        <p>a convenient way of keeping a list of key and value pairs, and are similar to hashes or has tables or dictionaries.</p>
+        
+        <ul>
+            <li>objects are limited to using strings for key values, whereas maps can use any data type as a key</li>
+            <li>there is no efficient way to find the number of key-value pairs an object has, where this is easy to do with maps using the size property</li>
+            <li>objects have methods that can be called and prototypes that can be used to create a chain of inheritance whereas maps are solely focused on the storage and retrieval of key-value pairs</li>
+            <li>the value of an object&#39;s properties can be accessed directly whereas maps restrict you to using the get() method to retrieve any values</li>
+        </ul>
+        
+        <h5>weak maps</h5>
+        <ul>
+            <li>they are the same as maps, except their keys cannot be primitives, and the garbage collector will automatically remove any dead entries when the reference to the original object is delted</li>
+            <li>has(), get(), set() and delete() methods can be used the same way as a regular map</li>
+            <li>weak maps and sets are useful for optimizing memory usage and avoiding memory leaks, but they&#39;re also limited in that they don&#39;t have access to all the methods their regular counterparts have.</li>
+        </ul>
+        
+        <h5>summary</h5>
+        <ul>
+            <li>arrays are an ordered list of values</li>
+            <li>multidimensional arrays are arrays that contain other arrays</li>
+            <li>arrays have lots of methods that can be used to manipulate items in the array</li>
+            <li>sets are new in ES6 and are ordered lists of non-duplicate values</li>
+            <li>maps are new in ES6 and are ordered lists of key-value pairs</li>
+            <li>we can use an if and else statement to control the flow of code</li>
+            <li>the switch statement can be used instead of multiple if and else statements</li>
+            <li>a while loop and do while loop cna be used to repeat a block of code while a condition is still true</li>
+            <li>a for loop works in a similar way to a while loop but has a different syntax</li>
+            <li>a for-of loop can be used to iterate over an array</li>
+            <li>sets and maps are enumerable so can also be looped over using a for-of loop</li>
+        </ul>
+        
+        <h3>ch4 functions</h3>
+        <p>a chunk of code that can be reference by a name and is almost like a small, self-contained mini program. they can help reduce repetition and made code easier to follow</p>
+        
+        <h4>arrow functions</h4>
+        <p><em>arrow syntax</em> - makes declaring functions muc more succint by using less verbose syntax</p>
+        <ul>
+            <li>they are much less verbose than normal function declarations</li>
+            <li>single parameters don&#39;t need putting into parentheses</li>
+            <li>the body of the function doesnt need placing inside a block if it&#39;s only one line</li>
+            <li>the return keyword isn&#39;t required if the return statement is the only statement in the body of the function</li>
+            <li>they don&#39;t bind they own value of this to the function</li>
+        </ul>
+        
+        <h4>function hoisting</h4>
+        <p>javascript interpreter&#39;s action of moving all variable and function declarations to the top of the current scope, regardless of where they are defined</p>
+        
+        <h4>variable hoisting</h4>
+        <p>variable declarations that use the var keyword are automatically moved to the top of the current scope. variable assignment is not hoisted however. this means that a variable assigned at the end of a function will have a value of undefined until the assignment is made.</p>
+        
+        <h4>callbacks</h4>
+        <p>a function that is passed as an argument to another</p>
+        
+        <h4>array iterators</h4>
+        <h5>forEach()</h5>
+        <p>will loop though the array and invoke a callback function using each value as an argument. </p>
+        
+        <h5>map()</h5>
+        <p>also iterates over an array and takes a callback function as a parameter that is invoked on each item in the array. 
+        it is often used to process data returned from databases in array form, such as adding HTML tags to plain text. the difference is that it returns a new array that replaces each value with the return value of the callback function</p>
+        
+        <h5>reduce()</h5>
+        <p>iterates over each value in the array, but this time it cumulatively combines each result to return just a single value.
+        this is often used to calculate statistics such as averages from data stored in an array</p>
+        
+        <h5>filter()</h5>
+        <p>returns a new array that only contains items from the original array that return true when passed to the callback</p>
+        
+        <h4>chaining iterators together</h4>
+        <p><em>chaining</em> - the various iterator functions can be used in combination to create some powerful transformations of data stored in arrays</p>
+        
+        <h4>summary</h4>
+        <ul>
+            <li>functions are first-class objects that behave the same way as other values</li>
+            <li>function literals can be defined using the function declaration or by creating a function expression by assigning an anonymous function to a variable</li>
+            <li>all functions return a value. if this is not explicitly stated, the function will return undefined</li>
+            <li>a parameter is a value that is written in the parentheses of a function declaration and acan be used like a varuable inside the function&#39;s body</li>
+            <li>an argument is a value that is provided to a funcion when it is invoked</li>
+            <li>the argumetns variable is an array-like object that allows access to each argument provided to the function using index notation</li>
+            <li>the rest operator can be used to access multiple arguments as an array</li>
+            <li>default arguments can be supplied to a function by assigning them to the paramters</li>
+            <li>arrow functions are a new shorthand notation that can be used for writing anonymous functions in ES6</li>
+            <li>function declarations can be invoked before they are defined because they are hoisted to the top of the sope, but function expressions cannot be invoked until after they are defined</li>
+            <li>a callback isa  function that is provided as an argument to another function</li>
+        </ul>
+    </main>
+</body>
+</html>
