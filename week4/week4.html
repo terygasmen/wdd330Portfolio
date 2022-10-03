@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Notes</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="theme-dark">
+    <nav>
+        <h1><a href="../index.html">Home</a></h1>
+    </nav>
+    <main>
+        <h3>ch 8 forms</h3>
+        <p>forms are made up of a form element that contains form controls such as input fields, select menus and buttons.</p>
+        
+        <h5>accessing form elements</h5>
+        <p>the legacy DOM had a useful property called document.forms that returns an HTML collection of all the forms in the document in the order they appear in the markup.</p>
+        
+        <h5>form properties and methods</h5>
+        <ul>
+            <li>form.submit() - submit the form automatically</li>
+            <li>form.reset() - reset all the form controls back to their initial values specified in the HTML</li>
+            <li>form.action - can be used to set the action attribute of a form, so it&#39;s sent to a different URL to be processed on the server</li>
+        </ul>
+
+        <h5>form events</h5>
+        <ul>
+            <li>focus - occurs when an element is focused on.</li>
+            <li>blur - when the user moves the focus away from the form element</li>
+            <li>change - when the user moves the focus away from the form element after changing it</li>
+        </ul>
+            
+        <h5>retrieving and changing value from a form</h5>
+        value - property that can be used to retrieve the text inside the field
+        
+        <h5>form controls</h5>
+        some common types of form controls are:
+        <ul>
+            <li>input fields including text, passwords, check boxes, radio buttons, and file uploads</li>
+            <li>select menus for drop-down lists of options</li>
+            <li>textarea elements for longer text entry</li>
+            <li>button elements for submitting and resetting forms
+        </ul>
+
+        <h5>new attributes in HTML5</h5>
+        <ul>
+            <li>autofocus - give focus to this element when a page loads</li>
+            <li>placeholder - will insert the value provided in the input field until the user enters some text</li>
+            <li>maxlength - will limit the number of characteres that can be entered in the field to the value given
+        </ul>
+
+        <h5>input fields</h5>
+        <ul>
+            <li>the default tupe type of input field is <em>text</em> which is used for entereing a short piece of text</li>
+            <li><em>input type=&#39;password&#39;</em> is used to enter passwords or secret information. the characters are concealed as they are entered so they&#39;re unable to be read on the screen</li>
+            <li>filter() - can be used for example to return an array containing only the check boxes that were checked</li>
+            <li>map() - can be used for example to replace each checkbox in the filtered array with its value property</li>
+            <li>hidden fields can be created using input fields with <em>type=&#39;hidden&#39;</em>. it shouldn&#39;t be used for sensitive data as the yare often used to send information such as settings or information that the user has already provided</li>
+            <li>a file input can be created using input fields with <em>type=&#39;file&#39;</em></li>
+        </ul>
+        
+
+        <h4>chapter summary</h4>
+        <ul>
+            <li>forms are the primary method used for entering data into a browser</li>
+            <li>forms have a variety of controls that are used for entering different types of information</li>
+            <li>HTML5 has a large number of new input types that are beginning to be implemented in modern browsers</li>
+            <li>document.forms will return an HTML collection of all the forms on a page</li>
+            <li>form.elements will return an HTML collection of all the elements contained within a form</li>
+            <li>forms have focus,blur, and change events that fire as a user interacts with the form</li>
+            <li>forms also have a submit event that can be used to intercept a form before it&#39;s been submitted</li>
+            <li>the information entered into a form can be read or updated using the value propertu of the form controls</li>
+            <li>the HTML5 form validation API can be used to automatically validate a form, but only at a basic level, so a custom validation script may be required</li>
+        </ul>
+
+        <h3>ch 12 object-oriented programming in javascript</h3>
+        <p>object-oriented programming is often used to model representations of objects in the real world. there are thre main concepts of OOP:</p>
+        <ul>
+            <li>encapsulation</li>
+            <li>polymorphism</li>
+            <li>inheritance</li>
+        </ul>
+        
+        <p><strong>encapsulation</strong></p>
+        <p>the inner workings are kept hidden inside the object and only the essential functionalities are exposed to the end user. this involves keeping all the programming logic inside an object and making methods available to implement the functionality, without the outside world needing to know how it's done</p>
+        <p><strong>polymorphism</strong></p>
+        <p>various objects can share the same method, but also have the ability to override shared methods with a more specific implementation</p>
+        <p><strong>inheritance</strong></p>
+        <p>we can take an object that already exists and inherit all its properties and methods. we can then improve on its functionality by adding new properties and methods</p>
+        
+        <h5>classes</h5>
+        <p>created as an instance of a class and inherit all the properties and methods of the class.</p>
+        <p>javascript didn&#39;t have classes before ES6, and used the concept of using actual objects as the blueprint for creating more objects. this is known as a <em>prototype-based</em> language.</p>
+        
+        <h5>constructor functions</h5>
+        <p>this is a function that defines the properties and methods of an object</p>
+        <p>by convention, the names of constructor functions or class declarations are capitalized whcih is the convention used for classes in class-based programming languages.</p>
+        <p><em>constructor</em> property - all objects have this. it retusn the constructor function that created it. we can use this to instantiate a copy of an object, without having reference the actual constructor function or class declaration directly.</p>
+        <p><em>static</em> keyword - can be used in class declations to create a static method. </p>
+        <p>javascript uses a <em>prototypal inheritance</em> model. this means that every class has a prototype property that is shared by every instance of the class. so any properties or methods of a class&#39;s prototype can be accessed by every object instantiated by the class.</p>
+        <p><em>proto</em> property - this is known as dunder proto, which is short for double underscore proto. this takes the object as a parameter.</p>
+        <p><em>a golden rule to remember is <strong>never use arrays of objects as a default value in prototype</strong>.</em></p>
+        <p>to summarize,  the following points should be considered when using classes and prototypes to create instsances</p>
+        
+        <ul>
+            <li>create a class declaration that deals with any initialization, shared properties and methods</li>
+            <li>any extra methods and properties that need to be augmented to the class declaration after it&#39;s been defined can be added to the prototype. these will be added to all instances, even those that have already been created</li>
+            <li>add any properties or methods that are individual to a particular instance can be augmented using assignment to that object</li>
+            <li>be careful when overwriting the prototype completely--the constructor class needs to be reset.</li>
+        </ul>
+        
+        <h5>public and private methods</h5>
+        <p>by default, an object&#39;s method are <em>public</em> in javascript. methods and properties are said to be public because they can be queries directly and changed by assignment.</p>
+        <p>private methods are done through getters and setters.</p>
+        
+        <h5>enumerable properties</h5>
+        <p>properties of objects in javascript are said to be <em>enumerable</em> or <em>nonenumerable</em>. if they are numberable, this means they will not show up when a for-in loop is used to loop through an object&#39;s properties and methods.</p>
+        <p><em>propertyIsEnumerable()</em> - can be used to check if a property is enumerable.</p>
+        <p>good practice is for all built-in methods to be non-enumerable, and any user-defined methods to be made enumerable. this is so all the built-in methods don&#39;t keep showing up when looking at an object&#39;s methods, but user-defined methods are easy to find.</p>
+        
+        <h5>inheritance</h5>
+        <p><em>extends</em> keyword - a class can inherit from another class using the extends keyword in a class declaration.</p>
+        <p><em>super()</em> - refers to the parent class, and can be used to access any properties and call any method of the parent class.</p>
+        
+        <h5>adding methods to built-in objects</h5>
+        <p><em>monkey-patching</em> - add more methods to the prototype of javascript&#39;s built-in objects to add more functionality. this is mostly frowned upon in the javascript community.</p>
+        
+        <h5>property attributes and descriptors</h5>
+        <p>all object properties have the following attributes stored in a property descriptor:</p>
+        <ul>
+            <li>value - this is the value of the property and is undefined by default</li>
+            <li>writable - this boolean value shows whether a property can be changed or not, and is false by default</li>
+            <li>enumerable - this boolean value shows whether a property will show up when the object is displayed in a for in loop, and is false by default</li>
+            <li>configurable - this boolean value shows whether you can delete a property or change any of its attributes, and is false by default</li>
+        </ul>
+        
+        <h5>getters and setters</h5>
+        <p>an object property descriptor can have <em>get()</em> and <em>set()</em> methods instead of a value attribute. all objects must have one or the other, they can&#39;t have both.</p>
+        <p><em>get()</em> and <em>set()</em> methods can be used to control how a property is set using assignment and the value that is returned when a property is queried.</p>
+        
+        <h5>creating objects from other objects</h5>
+        <p>it&#39;s possible to avoid using classes altogether, and create new objects based on another object that acts as a &#39;blueprint&#39; or prototype instead.</p>
+        <p><em>create</em> method - can be used to create a new object that is an exact copy of the object that is provided as an argument. the object that is provided as the argument acts as the prototype for the new object.</p>
+        
+        <h5>object prototype chain</h5>
+        <p>creating objects from objects will create a prototype chain. every time a new object is created using the <em>Object.create()</em> method, the new object inherits all the properties and methods from the parent object, which becomes the new object&#39;s prototype.</p>
+        
+        <h5>mixins</h5>
+        <p>a mixin is a way of adding properties and methods of some objects to another object without using inheritance. it allows more complex objects to be created by mixing basic objects together.</p>
+        <p><em>Object.assign()</em> - method that will assign to the object provided as the first argument all of the properties from any objects provided as further arguments.</p>
+        <p>when objects are copied by assignment, they are only copied by reference. this means that another object is not actually created in memory; the new reference will just point ot the old object. any changes that are made to either objects will affect both of them.</p>
+        <p><em>shallow copy of an object</em> - points to the original object. changes are made to the original when the copy is modified
+        <em>deep or hard copy</em> - create a completely new object that has all the same properties as the old object.</p>
+        
+        <h4>chapter summary</h4>
+        <ul>
+            <li>object-oriented programming (OOP) is a way of programming that uses objects that encapsulate their own properties and methods</li>
+            <li>the main concepts of OOP are encapsulation, polymorphism and inheritance</li>
+            <li>constructor functions can be used to create instances of objects</li>
+            <li>ES6 introduced class declarations that use the class keyword. these can be used in place of constructor functions</li>
+            <li>inside a contructor function or class declaration, the keyword this refers to the object returned by the function</li>
+            <li>all instances of a class or constructor function inherit all the properties and methods of its prototype</li>
+            <li>the prototype is live, so new properties and methods can be added to existing instances</li>
+            <li>the prototype chain is used to find an available method. if an object lacks a method, javascript will check whether its prototype has the method. if not, it will check that function&#39;s prototype until it finds the method or reaches the Object constructor function</li>
+            <li>private properties and methods can be created by defining variables using const and defining a function inside a onstructor fucntion. these cna be made public using getter and setter functions</li>
+            <li>monkey-patching is the process of adding methods to built-in objects by augmenting their prototypes. this should be done with caution as it can cause unexpected behavior in the way built-in objects work</li>
+            <li>a mixin method can be used to add properties and methods from other objects without creating an inheritance chain</li>
+            <li>methods can be chained together and called in sequence if they return a reference to this</li>
+            <li>polymorphism allows objects to override shared methods with a more specific implementation</li>
+            <li>the value of this is not retained inside nested functions, which can cause errors. this can be worked around by using that = this, using the bind(this) method and using arrow functions</li>
+            <li>methods can be borrowed from other objects</li>
+            <li>composition over inheritance is a design pattern where objects are composed from &#39;building-block&#39; objects, rather than inheriting all their properties and methods from a parent class</li>
+        </ul>
+        
+        <h3>ch 15 modern javascript</h3>
+        
+        <h4>modular javascript</h4>
+        <p><em>module</em> - a self-contained piece of code that provides functions and methods that can then be used in other files and by other modules. this helps to keep code organized in separate, reusable files which improves code maintainability.</p>
+        <p><em>coupling</em> of code - refers to how dependent certain elements or modules of code are on each other. </p>
+        <p>two pieces of code are said to be tightly coupled if one relies on the other to run. changes to one piece of code will necessitate changes in the other.</p>
+        <p>two pieces of code are said to be loosely coupld if one piece of code can be easily substituted by another without affecting the final outcome.</p>
+        
+        <h5>ES6 modules</h5>
+        <p>there are a few important points about moduels that are worth keeping in mind</p>
+        <ul>
+            <li>all code in moduels is always in strict mode without the need for &#39;use strict&#39; and there is now ay to opt out of this</li>
+            <li>a module has its own global scope, so any variables created in the top-level of a module can only be accessed within that module</li>
+            <li>the value of <em>this</em> in the top level of a module is undefined, rather than the global object</li>
+            <li>you can&#39;t use HTML-style commets in modules</li>
+        </ul>
+        <p><em>default exports</em> - refer to a single variable, function or class in a module that can be imported without having to be explicitly named. the syntax for default exports is purposely easier to read because this is how modules were designed to be used.</p>
+
+    </main>
+
+</body>
+</html>
