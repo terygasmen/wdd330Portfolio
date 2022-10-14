@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Notes</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="theme-dark">
+    <nav>
+        <h1><a href="../index.html">Home</a></h1>
+    </nav>
+    <main>
+        <h3>ch10 testing and debugging</h3>
+        
+        <h4>errors, exceptions and warnings</h4>
+        <ul>
+            <li>system error - there&#39;s a problem with the system or external devices with which the program is interacting</li>
+            <li>programmer error - the program contains incorrect syntax or faulty logic; it coud even be as simple as a type</li>
+            <li>user error - the user has entered data incorrectly, which the program is unable to handle</li>
+        </ul>
+        <h5>exceptions</h5>
+        <p>error that produces a reutrn value that can then be used by the program to deal with the error.</p>
+        <h5>stack traces</h5>
+        <p>this is a sequenc of functions or methodcalls that lead to the point wher the error occurred. ti&#39;s often not just a single function or method call that causes an error. a stack trakce will work backward from the point at which the error occurred to identify the original function or method that started the sequence.</p>
+        <h5>warnings</h5>
+        <p>occurs if there&#39;s an error in the code that isn&#39;t enough to cause the program to crash. this means the program will continue to run after a warning.</p>
+        
+        <h4>the importance of testing and debugging</h4>
+        <p>a ninja progammer should ensure that the code they write fails loudly in development so any errors can be identified and fixed quickly. in production, a ninja programmer should try to make the code fail gracefully (although not completely silently--we still need to know there&#39;s an error), so the user experience is not affected, if possible. this is achieved by making sure exceptions are caught and dealth with, and code is tested rigorously. </p>
+        
+        <h4>strict mode</h4>
+        <p>prouces more exceptions and warnings and prohibits the use of some deprecated features. </p>
+        <p>writing code in strict mode can also help improve its clrarity and speed, since it follows conventions and will throw exceptions if any sloppy code practices are used.</p>
+        <p>not using strict mode is often referred to as &#39;sloppy mode&#39; as it&#39;s forgiving of sloppy programming practices.</p>
+        <p>strict mode simply requires the follownig string to be added to the first line of a JS file:</p>
+        <pre><code><span class="hljs-meta">'use strict'</span>;
+        </code></pre><h5>linting tools</h5>
+        <p>can be used to test the quality of JS code, beyond somply using strict mode. they are designed to highlight any sloppy programming practices or syntax errors, and will complain if certain style conventions are not followed, such as how code is indented. </p>
+        <p>linting tools are also useful for enforcing a programming <strong>style guide</strong>. this particularly useful when you&#39;re working in a team, as it ensures everybody follows the same conventions.</p>
+        
+        <h4>feature detection</h4>
+        <p>this is done using an if statement to chech whether an object or method exists before trying to actually call the method.</p>
+        <p>the old school way of checking for browser support was known as <strong>browser sniffing</strong>. this involves using the string returned by <em>window.navigator.userAgent</em> property that we met in the last chapter to identify the user&#39;s browser. the relevant methods can then be sued for that browser. </p>
+        
+        <h4>debugging in the browser</h4>
+        <p>debugging is the process of finding out where bugs occur in the code and then dealing with them.</p>
+        <h5>the trusty alert</h5>
+        <p>The most basic form of debugging is to use the alert() method to show a dialog at certain points in the code. Because alert() stops a program from running until OK is clicked, it allows us to effectively put breakpoints in the code that let us check the value of variables at that point to see if they’re what we expect them to be.</p>
+        <h5>usign the console</h5>
+        <p>provides a number of methods for logging information and debugging</p>
+        <ul>
+            <li>console.log() - can be used to log the value of variables at different stages of the program, although it will not actually stop the execution of the program in the same way as alert() does</li>
+            <li>console.trace() - will log an interactive stack trace in the console. This will show the functions that were called in the lead up to an exception occurring while the code is running.</li>
+        </ul>
+        <h5>debugging tools</h5>
+        <p>Most modern browsers also have a debugging tool that allows you to set <strong>breakpoints</strong> in your code that will pause it at certain points. You can then see the values of all the variables at those points and modify them. This can be very useful when trying to track down bugs.</p>
+        <p><strong>debugger</strong> keyword - this will create a breakpoint in your code that pause the execution of the code and allow you to see where the program is currently up to. you can also hover over any variables to see what value they hold at that point.</p>
+        
+        <h4>error objects</h4>
+        <ul>
+            <li>EvalError - not used in the current ECMAScript specification and only retained for backwards compatibility. It was used to identify errors when using the global eval() function.</li>
+            <li>RangeError - thrown when a number is outside an allowable range of values.</li>
+            <li>ReferenceError - thrown when a reference is made to an item that doesn’t exist. For example, calling a function that hasn&#39;t been defined.</li>
+            <li>SyntaxError - thrown when there’s an error in the code’s syntax.</li>
+            <li>TypeError - thrown when there’s an error in the type of value used; for example, a string is used when a number is expected</li>
+            <li>URIError - thrown when there’s a problem encoding or decoding the URI.</li>
+            <li>InternalError - a non-standard error that is thrown when an error occurs in the JavaScript engine. A common cause of this too much recursion.</li>
+        </ul>
+        <p>all error objects have a number of properties, but they&#39;re often used inconsistenly across browsers. the only properties that are generally safe to use are:</p>
+        <ul>
+            <li>the name property returns the name of the error constructor function used as a string</li>
+            <li>the message property returns a description of the error and should be provided as an argument to the Error constructor function</li>
+            <li>the stack property will return a stack trace for that error. this is a non-standard property and it&#39;s recommended that it is not safe to use in production sites.</li>
+        </ul>
+        <h5>throwing exceptions</h5>
+        <p>The <strong>throw</strong> statement can be applied to any JavaScript expression, causing the execution of the program to stop.</p>
+        
+        <h4>exception handling</h4>
+        <p>When an exception occurs, the program terminates with an error message. This is ideal in development as it allows us to identify and fix errors. In production, however, it will appear as if the program has crashed, which does not reflect well on a ninja programmer.</p>
+        <h5>try, catch and finally</h5>
+        <p>If we suspect a piece of code will result in an exception, we can wrap it in a <strong>try</strong> block. This will run the code inside the block as normal, but if an exception occurs it will pass the error object that is thrown onto a catch block.</p>
+        <p>The code inside the <strong>catch</strong> block will only run if an exception is thrown inside the try block. The error object is automatically passed as a parameter to the catch block. This allows us to query the error name, message and stack properties, and deal with it appropriately.</p>
+        <p>A <strong>finally</strong> block can be added after a catch block. This will always be executed after the try or catch block, regardless of whether an exception occurred or not. It is useful if you want some code to run in both cases.</p>
+        
+        <h4>tests</h4>
+        <p>Testing is an important part of programming that can often be overlooked. Writing good tests means your code will be less brittle as it develops, and any errors will be identified early on.</p>
+        <h5>test-driven development</h5>
+        <p><strong>Test-driven development(TDD)</strong> is the process of writing tests before any actual code. Obviously these tests will initially fail, because there is no code to test. The next step is to write some code to make the tests pass. After this, the code is refactored to make it faster, more readable, and remove any repetition. The code is continually tested at each stage to make sure it continues to work. This process should be followed in small piecemeal chunks every time a new feature is implemented</p>
+        <ol>
+            <li>write tests (that initially fail)</li>
+            <li>write code to pass the tests</li>
+            <li>refactor the code</li>
+            <li>test the refactored code</li>
+            <li>write more tests for new features</li>
+        </ol>
+        <p>This is often referred to as the <strong>“red-green-refactor</strong>” cycle of TDD, as failing tests usually show up as red, and tests that pass show as green.</p>
+        <h5>testing frameworks</h5>
+        <p>Testing frameworks provide a structure to write meaningful tests and then run them.</p>
+        <h6>jest</h6>
+        <p><strong>jest</strong> is TDD framework, created by facebook, that has gained a lot of popularity recently. it makes it easy to create and run tests by providing helper methods for common test assertions.</p>
+        
+        <h4>chapter summary</h4>
+        <ul>
+            <li>bugs are unavoidable in code, and it&#39;s best to find them early rather than later</li>
+            <li>javscript can be put into strict mode using the string &#39;use strict&#39;. this can be used in a whole file of just a single function</li>
+            <li>linting tools can be ised to ensure your code follows good practice and conventions</li>
+            <li>feature detection can check whether a method is supported before calling it, helping to avoid an exception ebing thrown</li>
+            <li>the console and browser&#39;s built-in debugging tool can be used to interactively find and fix bugs in code</li>
+            <li>exceptions can be thrown using the throw statement</li>
+            <li>an error object is created when an exception occurs</li>
+            <li>any code placed inside a try block will pass any error objects to a catch block when an excpetion occurs, any code inside a finally block will run if an exception does or does not occur.</li>
+            <li>test-droven development is the practice of writing tests that fail, then writing the code that passes the test, then refactirong the code every time a new feature is implemented</li>
+            <li>the jest framwork can be used to test your code.</li>
+        </ul>
+    </main>
+</body>
+</html>
