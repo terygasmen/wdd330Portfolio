@@ -1,0 +1,99 @@
+@charset "UTF-8";@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400;1,500&family=Karla:ital,wght@0,400;0,600;1,400;1,600&family=Rubik:ital,wght@0,400;0,600;1,400;1,600&display=swap");
+
+:root {
+    --background-primary: hsl(207deg, 95%, 8%);
+    --background-secondary-alt: #455d70;
+    --font-text: Karla, Avenir Next, Helvetica, Arial, sans-serif;
+    --font-text-bold: IBM Plex Mono, Menlo, Monaco, Courier New, monospace;
+    --text-normal: #f8f8f2;
+    --text-title-h1: #ff79c6;
+    --text-title-h2: #82aaff;
+    --text-title-h3: #c5e478;
+    --text-title-h4: #ffb86c;
+    --text-title-h5: #50fa7b;
+    --text-title-h6: #8be9fd;
+    --text-bold-color: #50fa7b;
+    --font-size-h1: 50px;
+    --font-size-h2: 30px;
+    --font-size-h3: 21px;
+    --font-size-h4: 20px;
+    --font-size-h5: 19px;
+    --font-size-h6: 18px;
+    --font-size-normal: 20px;
+    --border-radius: 15px;
+}
+
+html {
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    font-family: var(--font-text);
+    font-size: var(--font-size-normal);
+    text-align: center;
+    margin: 1rem;
+}
+header, main, footer {
+    margin: 1em;
+}
+h1 {
+    font-size: var(--font-size-h1);
+    color: var(--text-title-h1);
+}
+
+/* MAIN */
+ul {
+    background-color: var(--background-secondary-alt);
+    list-style: none;
+    padding: 0;
+    border-radius: var(--border-radius);
+} li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    border-radius: var(--border-radius);
+} li:hover {
+    background-color: var(--text-title-h3);
+    color: var(--background-primary);
+} li:hover {
+    cursor: pointer;
+} li span:hover {
+    font-size: larger;
+} .activeTodo:hover {
+    text-decoration:line-through;
+}
+
+
+.todoStatus {
+    display: flex;
+    padding: 1em;
+    justify-content: space-between;
+}
+.todoOptions button {
+    background: none;
+    border: none;
+    font-size: var(--font-size-h2);
+}
+.todoStatus button:hover {
+    cursor: pointer;
+    background-color: var(--text-bold-color); 
+    border-radius: var(--border-radius);
+}
+
+/* FOOTER */
+input {
+    background-color: var(--background-secondary-alt);
+    color: var(--text-normal);
+    outline: none;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 1em;
+    font-size: var(--font-size-h5);
+    box-sizing: border-box;
+} input::placeholder {
+    color: var(--text-title-h6);
+} #enterTodo {
+    font-size: var(--font-size-h2);
+} #enterTodo:hover {
+    cursor: pointer;
+    background-color: var(--text-bold-color); 
+    border-radius: var(--border-radius);
+}

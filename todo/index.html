@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header><h1>Todos</h1></header>
+
+    <main>
+        <ul id="todoList">
+            <li>
+                <div class="taskLeft">
+                    <span class="activeTodo">🟪</span> task one
+                </div>
+                <span class="closeTodo">❌</span>
+            </li>
+            <li>
+                <div class="taskLeft">
+                    <span class="activeTodo">🟪</span> task two
+                </div>
+                <span class="closeTodo">❌</span>
+            </li>
+        </ul>
+        <div class="todoStatus">
+            <p><span id="TodosTotal">0</span> tasks left</p>
+            <div class="todoOptions">
+                <button id="allTasks">🌎</button>
+                <button id="activeTasks">🌱</button>
+                <button id="completedTasks">🙌</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <label for="">
+            <input type="text" id="addTodo" placeholder="add a todo">
+            <span id="enterTodo" onclick="newTodo()">➕</span>
+        </label>
+    </footer>    
+</body>
+</html>
