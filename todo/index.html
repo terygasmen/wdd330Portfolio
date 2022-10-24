@@ -8,38 +8,23 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header><h1>Todos</h1></header>
-
     <main>
-        <ul id="todoList">
-            <li>
-                <div class="taskLeft">
-                    <span class="activeTodo">🟪</span> task one
-                </div>
-                <span class="closeTodo">❌</span>
-            </li>
-            <li>
-                <div class="taskLeft">
-                    <span class="activeTodo">🟪</span> task two
-                </div>
-                <span class="closeTodo">❌</span>
-            </li>
-        </ul>
-        <div class="todoStatus">
-            <p><span id="TodosTotal">0</span> tasks left</p>
-            <div class="todoOptions">
-                <button id="allTasks">🌎</button>
-                <button id="activeTasks">🌱</button>
-                <button id="completedTasks">🙌</button>
+        <h1>Todos</h1>
+        <div id="todo_list"></div>
+        <div class="status_bar">
+            <div id="todo_left"></div>
+            <div class="filters">
+                <button id="all_tasks">🌎</button>
+                <button id="active_tasks">🌱</button>
+                <button id="completed_tasks">🙌</button>
             </div>
         </div>
+        <div class="todo_input">
+            <input autofocus type="text" name="new_todo" id="new_todo" placeholder="add a task">
+            <button id="enter_todo">➕</button>    
+        </div>
     </main>
-
-    <footer>
-        <label for="">
-            <input type="text" id="addTodo" placeholder="add a todo">
-            <span id="enterTodo" onclick="newTodo()">➕</span>
-        </label>
-    </footer>    
+    
+    <script src="js/main.js" type="module"></script>
 </body>
 </html>
